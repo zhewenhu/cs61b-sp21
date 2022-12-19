@@ -30,7 +30,7 @@ public class TimeSLList {
         SLList<Integer> L = new SLList<>();
 
         int number = 8;
-        int[] N =new int[number];
+        int[] N = new int[number];
 
         for (int i = 0; i < number; i++) {
             N[i] = (int) (Math.pow(2, i) * 1000);

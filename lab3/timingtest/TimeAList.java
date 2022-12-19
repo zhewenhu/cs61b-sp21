@@ -29,7 +29,7 @@ public class TimeAList {
 
         AList<Integer> L = new AList<>();
 
-        int number = 7;
+        int number = 8;
         int[] N =new int[number];
 
         for (int i = 0; i < number; i++) {
