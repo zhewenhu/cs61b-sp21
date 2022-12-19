@@ -45,7 +45,7 @@ public class TestBuggyAList {
                 System.out.println("size: " + size);
             } else if (operationNumber == 2) {
                 // getLast
-                if (L.size() > 0 & buggy.size() > 0) {
+                if (L.size() > 0 && buggy.size() > 0) {
                     int ret = buggy.getLast();
                     int ret2 = L.getLast();
                     System.out.println("getLast(" + ret + ")" + " getLast(" + ret2 + ")");
@@ -53,7 +53,7 @@ public class TestBuggyAList {
                 }
             } else if (operationNumber == 3) {
                 // removeLast
-                if (L.size() > 0 & buggy.size() > 0) {
+                if (L.size() > 0 && buggy.size() > 0) {
                     int ret = buggy.removeLast();
                     int ret2 = L.removeLast();
                     System.out.println("removeLast(" + ret + ")" + " removeLast(" + ret2 + ")");
