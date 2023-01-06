@@ -126,7 +126,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private class DequeIterator implements Iterator<T> {
         private int index, cnt;
 
-        public DequeIterator() {
+        DequeIterator() {
             index = nextFirst + 1;
         }
 
