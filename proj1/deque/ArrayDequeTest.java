@@ -30,6 +30,21 @@ public class ArrayDequeTest {
         ad1.addLast("back");
         assertEquals(3, ad1.size());
 
+        ArrayDeque<String> ad2 = new ArrayDeque<String>();
+        ad2.addFirst("back");
+        ad2.addFirst("middle");
+        ad2.addFirst("front");
+        ad2.addFirst("1");
+        ad2.addFirst("2");
+        ad2.addFirst("3");
+        ad2.addFirst("4");
+        ad2.addFirst("5");
+        System.out.println(ad2.equals(ad1));
+
+        for (String s: ad2) {
+            System.out.println(s);
+        }
+
         System.out.println("Printing out deque: ");
         ad1.printDeque();
     }
