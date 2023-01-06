@@ -1,6 +1,9 @@
 package deque;
 
 import org.junit.Test;
+
+import java.util.Iterator;
+
 import static org.junit.Assert.*;
 
 
@@ -115,6 +118,55 @@ public class LinkedListDequeTest {
 
         for (double i = 999999; i > 500000; i--) {
             assertEquals("Should have the same value", i, (double) lld1.removeLast(), 0.0);
+        }
+    }
+
+    @Test
+    public void randomAddRemoveTest() {
+        LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
+        lld1.addFirst(0);
+        lld1.removeLast();
+        lld1.isEmpty();
+        lld1.isEmpty();
+        lld1.addFirst(4);
+        lld1.isEmpty();
+        assertEquals("Should have the same value", 4, lld1.removeLast(), 0.0);
+
+        lld1 = new LinkedListDeque<Integer>();
+        lld1.addLast(0);
+        lld1.removeFirst();
+        lld1.addLast(2);
+        lld1.addLast(3);
+        assertEquals("Should have the same value", 2, lld1.removeFirst(), 0.0);
+
+        lld1 = new LinkedListDeque<Integer>();
+        lld1.addFirst(0);
+        lld1.removeFirst();
+        lld1.addLast(2);
+        lld1.addLast(3);
+        assertEquals("Should have the same value", 2, lld1.removeFirst(), 0.0);
+    }
+
+    @Test
+    public void equalTest() {
+        LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
+        ArrayDeque<Integer> ad1 = new ArrayDeque<Integer>();
+
+        lld1.addFirst(1);
+        ad1.addFirst(1);
+        System.out.println(ad1.equals(lld1));
+    }
+
+    @Test
+    public void iteratorTest() {
+        LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
+        for (int i = 0; i < 4; i++) {
+            lld1.addLast(i);
+        }
+        Iterator<Integer> a = lld1.iterator();
+        for (int i = 0; i < 4; i++) {
+            System.out.println(a.hasNext());
+            a.next();
         }
     }
 }

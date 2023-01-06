@@ -132,5 +132,49 @@ public class ArrayDequeTest {
             assertEquals("Should have the same value", i, (double) ad1.removeLast(), 0.0);
         }
     }
+
+    @Test
+    public void addResizeTest() {
+        ArrayDeque<Integer> ad1 = new ArrayDeque<Integer>();
+
+        ad1.size();
+        ad1.addLast(1);
+        ad1.addFirst(2);
+        ad1.size();
+        ad1.addFirst(4);
+        ad1.addFirst(5);
+        ad1.addFirst(6);
+        ad1.addLast(7);
+        ad1.addLast(8);
+        ad1.addLast(9);
+        ad1.addLast(10);
+    }
+
+    @Test
+    public void getTest() {
+        ArrayDeque<Integer> ad1 = new ArrayDeque<Integer>();
+
+        ad1.addFirst(0);
+        ad1.addLast(1);
+        System.out.println(ad1.get(0));
+        System.out.println(ad1.get(1));
+        ad1.removeFirst();
+        ad1.removeLast();
+        ad1.addLast(6);
+        ad1.addLast(7);
+        System.out.println(ad1.get(1));
+        ad1.removeLast();
+        ad1.removeFirst();
+        ad1.addFirst(12);
+        ad1.addFirst(13);
+        ad1.addFirst(14);
+        ad1.addFirst(15);
+        System.out.println(ad1.get(2));
+        ad1.addLast(17);
+        ad1.addFirst(18);
+        ad1.addLast(19);
+        ad1.addLast(20);
+        ad1.addLast(21);
+    }
 }
 
