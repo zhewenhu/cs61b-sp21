@@ -11,24 +11,29 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         nextLast = 5;
     }
 
-    private void expand() {
-        int capacity = size * 2;
+    private void resize() {
+        int capacity;
+        if (items.length == size) {
+            capacity = items.length * 2;
+        } else if ((items.length >= 16) && (size <= 0.25 * items.length)) {
+            capacity = items.length / 2;
+        } else {
+            return;
+        }
         T[] newItems = (T[]) new Object[capacity];
-        int newFirst = capacity / 2 - size / 2;
-        if (nextFirst + items.length > size) {
+        int newFirst = capacity / 4;
+        if (nextFirst + size > items.length) {
             int firstTrunk = items.length - nextFirst - 1;
             System.arraycopy(items, nextFirst + 1, newItems, newFirst, firstTrunk);
-            System.arraycopy(items, 0, newItems, newFirst + firstTrunk, size - firstTrunk);
+            System.arraycopy(items, 0, newItems, newFirst + firstTrunk, items.length - firstTrunk);
+            nextFirst = newFirst - 1;
+            nextLast = newFirst + size;
         } else {
-            System.arraycopy(items, nextFirst, newItems, newFirst, size);
+            System.arraycopy(items, nextFirst, newItems, newFirst, size + 1);
+            nextFirst = newFirst;
+            nextLast = newFirst + size + 1;
         }
-        nextFirst = newFirst - 1;
-        nextLast = newFirst + size;
         items = newItems;
-    }
-
-    private void shrink() {
-
     }
 
     @Override
@@ -37,9 +42,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             throw new IllegalArgumentException("can't add null");
         }
 
-        if (items.length == size) {
-            expand();
-        }
+        resize();
 
         items[nextFirst] = item;
 
@@ -57,9 +60,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             throw new IllegalArgumentException("can't add null");
         }
 
-        if (items.length == size) {
-            expand();
-        }
+        resize();
 
         items[nextLast] = item;
 
@@ -93,6 +94,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size == 0) {
             return null;
         }
+        resize();
         nextFirst = (nextFirst == items.length - 1) ? 0 : ++nextFirst;
         T returnItem = items[nextFirst];
         items[nextFirst] = null;
@@ -105,6 +107,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size == 0) {
             return null;
         }
+        resize();
         nextLast = (nextLast == 0) ? (items.length - 1) : --nextLast;
         T returnItem = items[nextLast];
         items[nextLast] = null;
@@ -114,8 +117,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public T get(int index) {
-        if (nextFirst + size > items.length) {
-            return items[index - (items.length - nextFirst)];
+        if (nextFirst + index + 1 >= items.length) {
+            return items[index - (items.length - nextFirst) + 1];
         }
         return items[nextFirst + index + 1];
     }
@@ -123,5 +126,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return null;
+    }
+
+    public boolean equals(Object o) {
+        return true;
     }
 }
