@@ -27,8 +27,8 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     /* Instance Variables */
     private Collection<Node>[] buckets;
-    double maxLoad;
-    int size = 0;
+    private double maxLoad;
+    private int size = 0;
 
     /** Constructors */
     public MyHashMap() {
@@ -181,16 +181,80 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        int index = hash(key);
+        Collection<Node> bucket = buckets[index];
+        if (bucket != null) {
+            for (Node node : bucket) {
+                if (node.key.equals(key)) {
+                    V value = node.value;
+                    bucket.remove(node);
+                    size--;
+                    if (bucket.isEmpty()) {
+                        buckets[index] = null;
+                    }
+                    return value;
+                }
+            }
+        }
+        return null;
     }
 
     @Override
     public V remove(K key, V value) {
-        throw new UnsupportedOperationException();
+        int index = hash(key);
+        Collection<Node> bucket = buckets[index];
+        if (bucket != null) {
+            for (Node node : bucket) {
+                if (node.key.equals(key) && node.value.equals(value)) {
+                    bucket.remove(node);
+                    size--;
+                    if (bucket.isEmpty()) {
+                        buckets[index] = null;
+                    }
+                    return value;
+                }
+            }
+        }
+        return null;
     }
 
     @Override
     public Iterator<K> iterator() {
-        return null;
+        return new MyHashMapIter();
+    }
+
+    private class MyHashMapIter implements Iterator<K> {
+        private int bucketIndex = 0;
+        private Iterator<Node> bucketIterator = (buckets.length > 0) ? buckets[0].iterator() : null;
+
+        MyHashMapIter() {}
+
+        @Override
+        public boolean hasNext() {
+            if (bucketIterator == null) {
+                return false;
+            }
+            if (bucketIterator.hasNext()) {
+                return true;
+            }
+            while (++bucketIndex < buckets.length) {
+                if (buckets[bucketIndex] != null) {
+                    bucketIterator = buckets[bucketIndex].iterator();
+                    if (bucketIterator.hasNext()) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public K next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return bucketIterator.next().key;
+        }
+
     }
 }
